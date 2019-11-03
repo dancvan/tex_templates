@@ -1,0 +1,222 @@
+
+\documentclass[preprint,12pt]{elsarticle}
+
+
+\usepackage{titlesec}
+\usepackage{verbatim}
+\usepackage[title,titletoc]{appendix}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{amssymb}
+\usepackage{bigstrut}
+\usepackage{lineno}
+\usepackage{afterpage}
+\usepackage{graphicx}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{amsfonts,epsfig}
+\usepackage{rotating}
+\usepackage{algorithmicx}
+\usepackage{color}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+\usepackage[normalem]{ulem}
+\usepackage{pstricks,pst-node,amsmath}
+\usepackage{multirow}
+\usepackage{graphicx,amsmath}
+\usepackage{flushend}
+\usepackage{amssymb,amsfonts,amsbsy,epsfig}
+\usepackage{lscape}
+\usepackage[noend]{algpseudocode}
+\usepackage{epstopdf}
+\usepackage{amsmath,mathtools}
+\usepackage{framed}
+\usepackage{algorithm}
+\usepackage{hyperref}
+\usepackage[margin=0.5 in]{geometry}
+\usepackage[symbol]{footmisc}
+\usepackage [english]{babel}
+\usepackage [autostyle, english = american]{csquotes}
+\MakeOuterQuote{"}
+\usepackage{amssymb}
+\usepackage{xspace}
+\usepackage{setspace}
+\usepackage{array}
+\usepackage{textcomp}
+
+
+\journal{Saulson 600}
+
+\begin{document}
+\sloppy
+{\LARGE\textbf{Beamsplitters (Haus)}}
+\\
+\section{Reciprocity principle}
+\label{s:hho}
+
+Figure \ref{fig:CT} shows all phases of HHO, which are described in the next subsections.
+
+%\begin{figure}[http]
+%\centering
+%\includegraphics[scale=0.6]{CT6}
+%\caption{Different phases of HHO}
+%\label{fig:CT}
+%\end{figure}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Exploration phase}
+
+In HHO, the Harris' hawks perch randomly on some locations and wait to detect a prey based on two strategies.
+
+\begin{equation} \label{eq:1}
+X(t+1) = \left\{\begin{matrix}
+X_{rand}(t)-r_{1}\left | X_{rand}(t)-2r_{2}X(t) \right |  &  q\geq 0.5   \\
+(X_{rabbit}(t)-X_{m}(t))-r_{3}(LB+r_{4}(UB-LB)) &  q<0.5
+\end{matrix}\right.
+ \end{equation}
+
+\noindent where $X(t+1)$ is the position vector of hawks in the next iteration $t$, $X_{rabbit}(t)$ is the position of rabbit,  $X(t)$ is the current position vector of hawks, $r_{1}$, $r_{2}$, $r_{3}$, $r_{4}$, and $q$ are random numbers inside (0,1), which are updated in each iteration, $LB$ and $UB$ show the upper and lower bounds of variables, $X_{rand}(t)$ is a randomly selected hawk from the current population, and $X_{m}$ is the average position of the current population of hawks.
+The average position of hawks is attained using Eq. (\ref{eq:2}):
+\begin{equation} \label{eq:2}
+X_{m}(t)=\frac{1}{N}\sum_{i=1}^{N}X_{i}(t)
+\end{equation}
+where $X_{i}(t)$ indicates the location of each hawk in iteration $t$ and $N$ denotes the total number of hawks.
+
+\subsection{Transition from exploration to exploitation}
+
+To model this step, the energy of a rabbit is modeled as:
+\begin{equation} \label{eq:3}
+E=2E_{0}(1-\frac{t}{T})
+\end{equation}
+where $E$ indicates the escaping energy of the prey, $T$ is the maximum number of iterations, and $E_{0}$ is the initial state of its energy.  The time-dependent behavior of $E$ is also demonstrated in Fig. \ref{fig:E}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Exploitation phase}
+
+\subsubsection{Soft besiege}
+This behavior is modeled by the following rules:
+
+\begin{equation} \label{eq:4}
+X(t+1)=\Delta X(t)-E\left |JX_{rabbit}(t)-X(t)\right |
+\end{equation}
+\begin{equation} \label{eq:deltaX}
+\Delta X(t)=X_{rabbit}(t)-X(t)
+\end{equation}
+where $\Delta X(t)$ is the difference between the position vector of the rabbit and the current location in iteration $t$, $r_{5}$ is a random number inside (0,1), and $J=2(1-r_{5})$ represents the random jump strength of the rabbit throughout the escaping procedure. The $J$ value changes randomly in each iteration to simulate the nature of rabbit motions.
+
+\subsubsection{Hard besiege}
+In this situation, the current positions are updated using Eq. (\ref{eq:hard}):
+\begin{equation} \label{eq:hard}
+X(t+1)=X_{rabbit}(t)-E \left |\Delta X(t) \right |
+\end{equation}
+
+A simple example of this step with one hawk is depicted in Fig. \ref{fig:movehard}.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsubsection{Soft besiege with progressive rapid dives}
+
+To perform a soft besiege, we supposed that the hawks can evaluate (decide) their next move based on the following rule in Eq. (\ref{eq:6}):
+\begin{equation} \label{eq:6}
+Y=X_{rabbit}(t)-E\left |JX_{rabbit}(t)-X(t)\right |
+\end{equation}
+
+We supposed that they will dive based on the LF-based patterns using the following rule:
+\begin{equation} \label{eq:7}
+Z=Y+S\times LF(D)
+\end{equation}
+where $D$ is the dimension of problem and $S$ is a random vector by size $1\times D$ and LF is the levy flight function, which is calculated using Eq. (\ref{eq:lf}):
+\begin{equation} \label{eq:lf}
+LF(x)=0.01\times \frac{u\times \sigma }{\left | v \right |^{\frac{1}{\beta }}}, \sigma =\left ( \frac{\Gamma (1+\beta )\times sin(\frac{\pi\beta}{2})}{\Gamma(\frac{1+\beta}{2})\times \beta\times2^{(\frac{\beta-1}{2})})}  \right )^{\frac{1}{\beta}}
+\end{equation}
+where $u$, $v$ are random values inside (0,1), $\beta$ is a default constant set to 1.5.
+
+
+Hence, the final strategy for updating the positions of hawks in the soft besiege phase can be performed by Eq. (\ref{eq:main}):
+\begin{equation} \label{eq:main}
+X(t+1)=\left\{\begin{matrix}
+Y & if F(Y)<F(X(t)) \\
+Z  & if F(Z)<F(X(t)) \\
+\end{matrix}\right.
+\end{equation}
+where $Y$ and $Z$ are obtained using Eqs.(\ref{eq:6}) and (\ref{eq:7}).
+
+A simple illustration of this step for one hawk is demonstrated in Fig. \ref{fig:move}.
+
+
+\subsubsection{Hard besiege with progressive rapid dives}
+
+The following rule is performed in hard besiege condition:
+\begin{equation} \label{eq:mainhard2}
+X(t+1)=\left\{\begin{matrix}
+Y & if F(Y)<F(X(t)) \\
+Z  & if F(Z)<F(X(t)) \\
+\end{matrix}\right.
+\end{equation}
+
+
+where $Y$ and $Z$ are obtained using new rules in Eqs.(\ref{eq:newy}) and (\ref{eq:newz}).
+
+\begin{equation} \label{eq:newy}
+Y=X_{rabbit}(t)-E\left |JX_{rabbit}(t)-X_{m}(t)\right |
+\end{equation}
+\begin{equation} \label{eq:newz}
+Z=Y+S\times LF(D)
+\end{equation}
+where $X_{m}(t)$ is obtained using Eq. (\ref{eq:2}).
+
+A simple example of this step is demonstrated in Fig. \ref{fig:movehard2}.
+
+
+\subsection{Pseudocode of HHO}
+The pseudocode of the proposed HHO algorithm is reported in Algorithm \ref{alg:HHO}.
+
+\begin{algorithm}
+
+\caption{Pseudo-code of HHO algorithm}\label{alg:HHO}
+\begin{algorithmic}
+\State \textbf{Inputs}: The population size $N$ and maximum number of iterations $T$
+\State \textbf{Outputs}: The location of rabbit and its fitness value
+\State Initialize the random population $X_{i}(i=1,2,\ldots,N)$
+\While{(stopping condition is not met)}
+\State Calculate the fitness values of hawks
+\State Set \textbf{$X_{rabbit}$} as the location of rabbit (best location)
+\For{(each hawk ($X_{i}$))}
+\State Update the initial energy $E_{0}$ and jump strength $J$ \Comment{\texttt{E$_{0}$=2rand()-1, J=2(1-rand())}}
+\State Update the $E$ using Eq. (\ref{eq:3})
+
+\If{ ($|E|\geq 1$)} \Comment{\texttt{Exploration phase}}
+\State Update the location vector using Eq. (\ref{eq:1})
+\EndIf
+\If {($|E|< 1$)} \Comment{\texttt{Exploitation phase}}
+\If{($r\geq$0.5 and $|E|\geq 0.5$ ) }  \Comment{Soft besiege}
+\State Update the location vector using Eq. (\ref{eq:4})
+%\EndIf
+\ElsIf{($r\geq$0.5 and $|E|< 0.5$ ) } \Comment{Hard besiege}
+\State Update the location vector using Eq. (\ref{eq:hard})
+%\EndIf
+\ElsIf{($r<$0.5 and $|E|\geq 0.5$ ) } \Comment{Soft besiege with progressive rapid dives}
+\State Update the location vector using Eq. (\ref{eq:main})
+%\EndIf
+\ElsIf{($r<$0.5 and $|E|< 0.5$ ) }  \Comment{Hard besiege with progressive rapid dives}
+\State Update the location vector using Eq. (\ref{eq:mainhard2})
+\EndIf
+\EndIf
+\EndFor
+\EndWhile
+\State \textbf{Return} \textbf{$X_{rabbit}$}
+\end{algorithmic}
+\end{algorithm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{References}
+
+\textbf{Harris Hawks Optimization: Algorithm and Applications, Ali Asghar Heidari and Seyedali Mirjalili and Hossam Faris and Ibrahim Aljarah and Majdi Mafarja and Huiling Chen, Future Generation Computer Systems, 2019}.
+
+
+\end{document}
